@@ -18,11 +18,6 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-//        val layoutManager = LinearLayoutManager(this.context)
-//        recyclerView.layoutManager = layoutManager
-//        val adapter = HomeAdapter(items)
-//        recyclerView.adapter = adapter
-
         val layoutManager = GridLayoutManager(this.context, 2, GridLayoutManager.VERTICAL, false)
         recyclerView.layoutManager = layoutManager
         val adapter = HomeAdapter(items)
