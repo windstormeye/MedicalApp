@@ -11,7 +11,7 @@
         android:theme="@style/Theme.Medical">
         <activity
             android:name=".question.QuickQuestionFinishActivity"
-            android:label="答题结束" />
+            android:label="答案解析" />
         <activity
             android:name=".question.QuickQuestionActivity"
             android:label="快问快答" />

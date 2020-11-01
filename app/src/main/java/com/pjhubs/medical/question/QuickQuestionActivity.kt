@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
+import androidx.appcompat.app.AlertDialog
 import com.pjhubs.medical.R
 import kotlinx.android.synthetic.main.activity_quick_question.*
 
@@ -41,22 +42,42 @@ class QuickQuestionActivity : AppCompatActivity() {
 
         answerListView.setOnItemClickListener { parent, view, position, id ->
             val quickQuestion = questionList[questionIndex]
-            // NOTE: 答完进入总结页
-            if (questionIndex + 1 == questionList.size) {
-                val intent = Intent(this, QuickQuestionFinishActivity::class.java)
-                intent.putExtra("corretCount", correctCount)
-                startActivity(intent)
-            }
-
             // NOTE: 答对数 +1
             if (quickQuestion.correct == position) {
                 correctCount += 1
             }
 
             // NOTE: 下一题
-            questionIndex += 1
-            val question = questionList[questionIndex]
-            updateLisView(question)
+            if (questionIndex + 1 < 3) {
+                questionIndex += 1
+                val question = questionList[questionIndex]
+                updateLisView(question)
+            } else {
+                // NOTE: 答完进入总结页
+                val errorCount = questionList.size - correctCount
+                var message = "全部答对啦！"
+                var nextMessage = "好"
+
+                if (errorCount != 0) {
+                    message = "答错了 $errorCount 道题"
+                    nextMessage = "查看解析"
+                }
+
+                AlertDialog.Builder(this).apply {
+                    setTitle("答题结束")
+                    setMessage(message)
+                    setCancelable(false)
+                    setPositiveButton(nextMessage) { _, _ ->
+                        val intent = Intent(this.context, QuickQuestionFinishActivity::class.java)
+                        intent.putExtra("corretCount", correctCount)
+                        startActivity(intent)
+                    }
+                    setNegativeButton("结束答题") { _, _ ->
+                        finish()
+                    }
+                    show()
+                }
+            }
         }
     }
 
