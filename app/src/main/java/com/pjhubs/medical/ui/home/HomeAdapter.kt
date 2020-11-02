@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.pjhubs.medical.R
 import com.pjhubs.medical.question.QuickQuestionActivity
+import com.pjhubs.medical.question.ai.AIQuestionActivity
 import kotlinx.android.synthetic.main.item_home.view.*
 
 class HomeAdapter(private val itemList: List<HomeItem>): RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
@@ -22,9 +23,17 @@ class HomeAdapter(private val itemList: List<HomeItem>): RecyclerView.Adapter<Ho
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item_home, parent, false)
         val viewHolder = ViewHolder(view)
         viewHolder.itemView.setOnClickListener {
-            val intent = Intent(view.context, QuickQuestionActivity::class.java)
-            intent.putExtra("position", view.tag as Int)
-            view.context.startActivity(intent)
+            when (view.tag) {
+                0 -> {
+                    val intent = Intent(view.context, AIQuestionActivity::class.java)
+                    view.context.startActivity(intent)
+                }
+                else -> {
+                    val intent = Intent(view.context, QuickQuestionActivity::class.java)
+                    intent.putExtra("position", view.tag as Int)
+                    view.context.startActivity(intent)
+                }
+            }
         }
 
         return ViewHolder(view)

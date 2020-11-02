@@ -10,6 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Medical">
         <activity
+            android:name=".question.ai.AIQuestionActivity"
+            android:label="人机对战"
+            />
+        <activity
             android:name=".question.QuickQuestionFinishActivity"
             android:label="答案解析" />
         <activity
