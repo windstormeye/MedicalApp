@@ -9,7 +9,6 @@ import com.pjhubs.medical.R
 import kotlinx.android.synthetic.main.activity_quick_question.*
 
 class QuickQuestionActivity : AppCompatActivity() {
-
     private val questionList = ArrayList<QuickQuestion>()
     private var answerList = ArrayList<String>()
     private var questionIndex = 0
@@ -71,6 +70,7 @@ class QuickQuestionActivity : AppCompatActivity() {
                         val intent = Intent(this.context, QuickQuestionFinishActivity::class.java)
                         intent.putExtra("corretCount", correctCount)
                         startActivity(intent)
+                        finish()
                     }
                     setNegativeButton("结束答题") { _, _ ->
                         finish()
