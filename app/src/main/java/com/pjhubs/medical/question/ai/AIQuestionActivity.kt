@@ -11,6 +11,7 @@ import com.pjhubs.medical.R
 import com.pjhubs.medical.question.QuickQuestion
 import com.pjhubs.medical.question.QuickQuestionFinishActivity
 import kotlinx.android.synthetic.main.activity_a_i_question.*
+import kotlinx.android.synthetic.main.activity_battle_main.*
 import kotlinx.android.synthetic.main.activity_quick_question.*
 
 class AIQuestionActivity : AppCompatActivity() {
@@ -59,6 +60,10 @@ class AIQuestionActivity : AppCompatActivity() {
             // NOTE: 答对数 +1
             if (quickQuestion.correct == position) {
                 correctCount += 1
+                val playerScore = correctCount * 100
+                playerScoreTextView.text = "$playerScore"
+            } else {
+
             }
 
             // NOTE: 下一题
