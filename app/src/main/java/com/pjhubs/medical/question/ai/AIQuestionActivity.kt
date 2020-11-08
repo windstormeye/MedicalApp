@@ -13,6 +13,8 @@ import com.pjhubs.medical.question.QuickQuestionFinishActivity
 import kotlinx.android.synthetic.main.activity_a_i_question.*
 import kotlinx.android.synthetic.main.activity_battle_main.*
 import kotlinx.android.synthetic.main.activity_quick_question.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 class AIQuestionActivity : AppCompatActivity() {
 
@@ -20,7 +22,11 @@ class AIQuestionActivity : AppCompatActivity() {
     private var answerList = ArrayList<String>()
     private var questionIndex = 0
     private var adapter: ArrayAdapter<String>? = null
+    // 玩家分数
     private var correctCount = 0
+    // AI 分数
+    private var aiCorrectCount = 0
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,13 +63,19 @@ class AIQuestionActivity : AppCompatActivity() {
 
         answerListView.setOnItemClickListener { parent, view, position, id ->
             val quickQuestion = questionList[questionIndex]
+
+            // AI 答题
+            if ((0..2).random() == 1) {
+                aiCorrectCount += 1
+                val aiScore = aiCorrectCount * 100
+                aiScoreTextView.text = "$aiScore"
+            }
+
             // NOTE: 答对数 +1
             if (quickQuestion.correct == position) {
                 correctCount += 1
                 val playerScore = correctCount * 100
                 playerScoreTextView.text = "$playerScore"
-            } else {
-
             }
 
             // NOTE: 下一题
@@ -74,28 +86,43 @@ class AIQuestionActivity : AppCompatActivity() {
             } else {
                 // NOTE: 答完进入总结页
                 val errorCount = questionList.size - correctCount
-                var message = "全部答对啦！"
+                var message = "全部答对，你赢了！"
                 var nextMessage = "好"
 
                 if (errorCount != 0) {
-                    message = "答错了 $errorCount 道题"
+                    message = "你输了，答错 $errorCount 道题"
                     nextMessage = "查看解析"
-                }
 
-                AlertDialog.Builder(this).apply {
-                    setTitle("答题结束")
-                    setMessage(message)
-                    setCancelable(false)
-                    setPositiveButton(nextMessage) { _, _ ->
-                        val intent = Intent(this.context, QuickQuestionFinishActivity::class.java)
-                        intent.putExtra("corretCount", correctCount)
-                        startActivity(intent)
-                        finish()
+                    if (correctCount == aiCorrectCount) {
+                        message = "平局！你答错 $errorCount 道题"
                     }
-                    setNegativeButton("结束答题") { _, _ ->
-                        finish()
+
+                    AlertDialog.Builder(this).apply {
+                        setTitle("答题结束")
+                        setMessage(message)
+                        setCancelable(false)
+                        setPositiveButton(nextMessage) { _, _ ->
+                            val intent = Intent(this.context, QuickQuestionFinishActivity::class.java)
+                            intent.putExtra("corretCount", correctCount)
+                            startActivity(intent)
+                            finish()
+                        }
+                        setNegativeButton("结束答题") { _, _ ->
+                            finish()
+                        }
+                        show()
                     }
-                    show()
+                } else {
+                    AlertDialog.Builder(this).apply {
+                        setTitle("答题结束")
+                        setMessage(message)
+                        setCancelable(false)
+                        setPositiveButton(nextMessage) { _, _ ->
+                            finish()
+                        }
+                        show()
+                    }
+
                 }
             }
         }
