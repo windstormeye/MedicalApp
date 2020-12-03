@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.pjhubs.medical.R
 import com.pjhubs.medical.question.QuickQuestionActivity
 import com.pjhubs.medical.question.ai.AIQuestionActivity
+import com.unity3d.player.UnityPlayerActivity
 import kotlinx.android.synthetic.main.item_home.view.*
 
 class HomeAdapter(private val itemList: List<HomeItem>): RecyclerView.Adapter<HomeAdapter.ViewHolder>() {
@@ -28,9 +29,13 @@ class HomeAdapter(private val itemList: List<HomeItem>): RecyclerView.Adapter<Ho
                     val intent = Intent(view.context, AIQuestionActivity::class.java)
                     view.context.startActivity(intent)
                 }
-                else -> {
+                1 -> {
                     val intent = Intent(view.context, QuickQuestionActivity::class.java)
                     intent.putExtra("position", view.tag as Int)
+                    view.context.startActivity(intent)
+                }
+                else -> {
+                    val intent = Intent(view.context, UnityPlayerActivity::class.java)
                     view.context.startActivity(intent)
                 }
             }
