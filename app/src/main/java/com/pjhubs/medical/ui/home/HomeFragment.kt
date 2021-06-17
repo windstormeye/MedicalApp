@@ -34,9 +34,8 @@ class HomeFragment : Fragment() {
     }
 
     private fun initItems() {
-        items.add(HomeItem("饮食", R.drawable.ic_food))
-        items.add(HomeItem("运动", R.drawable.ic_sport))
-        items.add(HomeItem("用药", R.drawable.ic_pills))
+        items.add(HomeItem("人机对战", R.drawable.ic_food))
+        items.add(HomeItem("快问快答", R.drawable.ic_sport))
         items.add(HomeItem("综合", R.drawable.ic_general))
     }
 }

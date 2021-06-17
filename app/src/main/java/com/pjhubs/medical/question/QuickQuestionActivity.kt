@@ -66,12 +66,12 @@ class QuickQuestionActivity : AppCompatActivity() {
                     setTitle("答题结束")
                     setMessage(message)
                     setCancelable(false)
-                    setPositiveButton(nextMessage) { _, _ ->
-                        val intent = Intent(this.context, QuickQuestionFinishActivity::class.java)
-                        intent.putExtra("corretCount", correctCount)
-                        startActivity(intent)
-                        finish()
-                    }
+//                    setPositiveButton(nextMessage) { _, _ ->
+//                        val intent = Intent(this.context, QuickQuestionFinishActivity::class.java)
+//                        intent.putExtra("corretCount", correctCount)
+//                        startActivity(intent)
+//                        finish()
+//                    }
                     setNegativeButton("结束答题") { _, _ ->
                         finish()
                     }
